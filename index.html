@@ -1,0 +1,205 @@
+﻿<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matrice del rischio</title>
+  <link rel="stylesheet" href="test.css">
+  <!-- Collega il foglio di stile principale con le regole di layout e colori -->
+</head>
+<body>
+  <!-- Contenitore principale della pagina con la griglia del rischio, il calcolatore, la legenda e l'opzione per il download  -->
+  <main class="risk-matrix">
+    <!-- Intestazione descrittiva della pagina e titolo -->
+    <header>
+      <h1>Matrice del rischio</h1>
+      <p>Valuta il rischio inserendo probabilità e impatto</p>
+    </header>
+
+    <details class="legend-toggle">
+      <summary>Legenda</summary>
+      <div class="legend legend--compact">
+        <div class="legend-item"><span class="legend-dot low"></span>Accettabile</div>
+        <div class="legend-item"><span class="legend-dot moderate"></span>Monitorare</div>
+        <div class="legend-item"><span class="legend-dot high"></span>Mitigare</div>
+        <div class="legend-item"><span class="legend-dot critical"></span>Urgente / Azione immediata</div>
+      </div>
+      <div class="legend-details">
+        <div>
+          <strong>Probabilità</strong>
+          <ol>
+            <li><strong>Bassa</strong> - il verificarsi del danno è creduto impossibile e non si è mai verificato secondo gli addetti o è subordinato ad un concatenamento di eventi indipendenti tra loro;</li>
+            <li><strong>Media</strong> - il verificarsi del danno dipende da condizioni eccezionali e provocherebbe reazioni di grande incredulità tra gli addetti;</li>
+            <li><strong>Alta</strong> - il verificarsi del danno dipende da condizioni non direttamente connesse alla situazione ma possibili;</li>
+            <li><strong>Molto Alta</strong> - il verificarsi del danno nasce da condizioni direttamente connesse al contesto ed è quasi atteso dagli addetti o perché già verificatesi;</li>
+          </ol>
+        </div>
+        <div>
+          <strong>Danno</strong>
+          <ol>
+            <li><strong>Basso</strong> - poche giornate di prognosi;</li>
+            <li><strong>Medio</strong> - prognosi di un mese e oltre;</li>
+            <li><strong>Alto</strong> - invalidità parziale irreversibile;</li>
+            <li><strong>Altissimo</strong> - invalidità totale irreversibile o morte.</li>
+          </ol>
+        </div>
+      </div>
+    </details>
+
+    <!-- Griglia a matrice che mostra la classificazione dei rischi in base a probabilità e impatto -->
+    <section class="matrix">
+      <!-- Etichette delle colonne: i diversi livelli di impatto -->
+      <div class="matrix-label matrix-label--corner">Probabilità \ Impatto</div>
+      <div class="matrix-label">Basso</div>
+      <div class="matrix-label">Medio</div>
+      <div class="matrix-label">Alto</div>
+      <div class="matrix-label">Molto Alto</div>
+
+      <!-- Etichette delle righe: i diversi livelli di probabilità -->
+      <div class="matrix-label">Bassa</div>
+      <div class="cell low">Accettabile</div>
+      <div class="cell low">Accettabile</div>
+      <div class="cell moderate">Monitorare</div>
+      <div class="cell high">Mitigare</div>
+
+      <div class="matrix-label">Media</div>
+      <div class="cell low">Accettabile</div>
+      <div class="cell moderate">Monitorare</div>
+      <div class="cell high">Mitigare</div>
+      <div class="cell critical">Urgente</div>
+
+      <div class="matrix-label">Alta</div>
+      <div class="cell moderate">Monitorare</div>
+      <div class="cell high">Mitigare</div>
+      <div class="cell critical">Urgente</div>
+      <div class="cell critical">Azione immediata</div>
+
+      <div class="matrix-label">Molto Alta</div>
+      <div class="cell high">Mitigare</div>
+      <div class="cell critical">Urgente</div>
+      <div class="cell critical">Azione immediata</div>
+      <div class="cell critical">Azione immediata</div>
+    </section>
+
+    <!-- Sezione interattiva per calcolare il livello di rischio in base ai valori selezionati -->
+    <section class="calculator">
+      <div class="calculator-text">
+        <h2>Calcola il rischio</h2>
+        <p>Inserisci probabilità e impatto per ottenere la categoria di rischio e il punteggio.</p>
+      </div>
+
+      <!-- Form per l'input dell'utente: probabilità e impatto del rischio -->
+      <form id="risk-form">
+        <label>
+          Probabilità
+          <select id="probability" aria-label="Probabilità">
+            <option value="1">Bassa</option>
+            <option value="2">Media</option>
+            <option value="3">Alta</option>
+            <option value="4" selected>Molto Alta</option>
+          </select>
+        </label>
+
+        <label>
+          Impatto
+          <select id="impact" aria-label="Impatto">
+            <option value="1">Basso</option>
+            <option value="2">Medio</option>
+            <option value="3">Alto</option>
+            <option value="4" selected>Molto Alto</option>
+          </select>
+        </label>
+
+        <button type="submit">Calcola</button>
+      </form>
+
+      <!-- Sezione result: mostra il risultato del calcolo del rischio dopo l'invio del form -->
+      <div id="risk-result" class="risk-result" aria-live="polite" hidden>
+        Seleziona probabilità e impatto e premi Calcola.
+      </div>
+    </section>
+
+    <!-- Contenitore flex per download e immagine QR code -->
+    <div class="download-image-container">
+      <!-- Sezione per scaricare il documento PDF -->
+      <section class="download-section">
+        <h2>come calcolare il rischio</h2>
+        <p>scarica qui il documento.</p>
+        <div class="download-buttons">
+          <a href="documento calcolo del rischio.pdf" download class="download-link">download</a>
+          <a href="documento calcolo del rischio.pdf" target="_blank" class="download-link view-link">visualizza</a>
+        </div>
+      </section>
+
+      <!-- Sezione qr code  -->
+      <section class="image-section">
+        <h2>visualizza documento</h2>
+        
+        <div id="qr-code" class="section-image"></div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Libreria QR Code (pure JavaScript, niente dipendenze esterne - Licenza MIT) -->
+  <script src="qrcode.min.js"></script>
+
+  <!-- Script inline per calcolare la categoria di rischio e aggiornare il risultato dinamicamente -->
+  <script>
+    // Mappa 2D delle etichette di rischio per probabilità (righe) e impatto (colonne)
+    const riskMap = [
+      ["Accettabile", "Accettabile", "Monitorare", "Mitigare"],
+      ["Accettabile", "Monitorare", "Mitigare", "Urgente"],
+      ["Monitorare", "Mitigare", "Urgente", "Azione immediata"],
+      ["Mitigare", "Urgente", "Azione immediata", "Azione immediata"]
+    ];
+
+    // Riferimenti agli elementi DOM usati nel calcolo e nell'output
+    const riskResult = document.getElementById('risk-result');
+    const form = document.getElementById('risk-form');
+
+    // Gestisce l'invio del form, esegue il calcolo e aggiorna il box di risultato
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      const probability = Number(document.getElementById('probability').value);
+      const impact = Number(document.getElementById('impact').value);
+
+      // Calcola etichetta e punteggio del rischio usando la matrice e la regola prodotto
+      const label = riskMap[probability - 1][impact - 1];
+      const score = probability * impact;
+      const status = score <= 4 ? 'Accettabile' : score <= 8 ? 'Monitorare' : score <= 12 ? 'Mitigare' : 'Urgente';
+      const cssClass = score <= 4 ? 'low' : score <= 8 ? 'moderate' : score <= 12 ? 'high' : 'critical';
+
+      // Mostra il risultato e applica lo stile in base al livello di rischio
+      riskResult.hidden = false;
+      riskResult.className = `risk-result ${cssClass}`;
+      riskResult.innerHTML = `
+        <strong>${label}</strong>
+        <span>Punteggio: ${score} · Stato: ${status}</span>
+      `;
+    });
+
+    // ===== GENERA QR CODE CON LINK AL PDF =====
+    function generateQRCode() {
+      // URL relativo al file PDF (funziona sia in locale che online)
+      const pdfUrl = "documento%20calcolo%20del%20rischio.pdf";
+      
+      // Pulisce il contenitore precedente
+      document.getElementById('qr-code').innerHTML = '';
+      
+      // Crea il QR code contenente il link al file PDF
+      // (quando scansionato dal telefono, apre automaticamente il documento)
+      new QRCode(document.getElementById('qr-code'), {
+        text: pdfUrl,
+        width: 256,
+        height: 256,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+      });
+    }
+
+    // Genera il QR code quando la pagina carica
+    window.addEventListener('load', generateQRCode);
+  </script>
+</body>
+</html>
