@@ -92,7 +92,7 @@
       <form id="risk-form">
         <label>
           Probabilità
-          <select id="probability">
+          <select id="probability" aria-label="Probabilità">
             <option value="1">Bassa</option>
             <option value="2">Media</option>
             <option value="3">Alta</option>
@@ -102,7 +102,7 @@
 
         <label>
           Impatto
-          <select id="impact">
+          <select id="impact" aria-label="Impatto">
             <option value="1">Basso</option>
             <option value="2">Medio</option>
             <option value="3">Alto</option>
@@ -140,7 +140,7 @@
     </div>
   </main>
 
-  <!-- Libreria QR Code (Licenza MIT) -->
+  <!-- Libreria QR Code (pure JavaScript, niente dipendenze esterne - Licenza MIT) -->
   <script src="qrcode.min.js"></script>
 
   <!-- Script inline per calcolare la categoria di rischio e aggiornare il risultato dinamicamente -->
@@ -178,14 +178,16 @@
       `;
     });
 
-    // GENERA QR CODE CON LINK AL PDF
+    // ===== GENERA QR CODE CON LINK AL PDF =====
     function generateQRCode() {
       // URL completo del PDF su GitHub Pages
       const pdfUrl = "https://danieletombacco-ui.github.io/PWdanieletombacco.github.io/documento%20calcolo%20del%20rischio.pdf";
-     
+      
+      // Pulisce il contenitore precedente
+      document.getElementById('qr-code').innerHTML = '';
       
       // Crea il QR code contenente il link al file PDF
-      
+      // (quando scansionato dal telefono, apre automaticamente il documento)
       new QRCode(document.getElementById('qr-code'), {
         text: pdfUrl,
         width: 256,
